@@ -1,7 +1,8 @@
 "use client";
-import { Phone } from "@prisma/client";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, CopyIcon } from "lucide-react";
+import { useEditPhoneModal } from "@/hooks/use-edit-phone-modal";
+import { Phone } from "@prisma/client";
+import { ArrowRight, ChevronLeft, ChevronRight, CopyIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -16,6 +17,7 @@ export const PhoneList = ({ page, phones, pageCount }: Props) => {
   const hasNext = page < pageCount;
   const hasPrev = page > 1;
   const router = useRouter();
+  const editPhoneModal = useEditPhoneModal();
 
   // const formattedItems = phones.map
 
@@ -25,7 +27,7 @@ export const PhoneList = ({ page, phones, pageCount }: Props) => {
   };
 
   return (
-    <div className="flex flex-col gap-y-2 py-2">
+    <div className="flex flex-col gap-y-5 py-2">
       <div className="flex justify-start gap-x-1">
         {hasPrev && (
           <Button
@@ -56,9 +58,25 @@ export const PhoneList = ({ page, phones, pageCount }: Props) => {
         <div key={phone.id} className="pl-2">
           <div className="flex justify-start items-center gap-x-3">
             <h3 className="font-semibold">{phone.name}</h3>
-            <Button onClick={() => onCopy(phone.id)} variant="ghost" size="sm">
-              <CopyIcon className="h-3 w-3" />
-            </Button>
+            <div className="flex gap-x-1">
+              <Button
+                onClick={() => onCopy(phone.id)}
+                variant="ghost"
+                size="iconSm"
+              >
+                <CopyIcon className="h-3 w-3" />
+              </Button>
+              <Button
+                onClick={() => {
+                  console.log("hello");
+                  router.push(`/phone/${phone.id}`);
+                }}
+                variant="ghost"
+                size="iconSm"
+              >
+                <ArrowRight className="h-3 w-3" />
+              </Button>
+            </div>
           </div>
           <div className="flex justify-start">
             <p className="text-sm text-muted-foreground">

@@ -1,5 +1,4 @@
 import { PhoneList } from "@/components/phone/phone-list";
-import { Separator } from "@/components/ui/separator";
 import { getPhonesPagination } from "@/data/phone";
 import { notFound } from "next/navigation";
 
@@ -15,7 +14,7 @@ export default async function PhonePage({ searchParams }: Props) {
     pageNum = 1;
   } else {
     pageNum = parseInt(searchParams.page);
-    console.log(pageNum);
+    // console.log(pageNum);
 
     if (!pageNum) {
       notFound();

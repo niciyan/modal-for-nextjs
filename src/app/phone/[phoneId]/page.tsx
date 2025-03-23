@@ -1,5 +1,6 @@
 import db from "@/lib/db";
 import { notFound } from "next/navigation";
+import { PhoneToolButton } from "./components/phone-tool-button";
 
 interface Props {
   params: {
@@ -18,7 +19,12 @@ const PhoneIdPage = async ({ params }: Props) => {
     notFound();
   }
 
-  return <div>{phone.name}</div>;
+  return (
+    <div>
+      {phone.name}
+      <PhoneToolButton phone={phone} />
+    </div>
+  );
 };
 
 export default PhoneIdPage;

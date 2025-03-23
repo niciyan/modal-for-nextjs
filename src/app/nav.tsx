@@ -1,6 +1,5 @@
 import PhoneSwitcher from "@/components/phone-switcher";
 import { getAllPhones } from "@/data/phone";
-import Link from "next/link";
 
 export const Navbar = async () => {
   const phones = await getAllPhones();

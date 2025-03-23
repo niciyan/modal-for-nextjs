@@ -1,6 +1,6 @@
 "use client";
 
-import { addPhone } from "@/actions/phone";
+import { editPhone } from "@/actions/phone";
 import { Modal } from "@/components/modal";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,9 +13,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { useCreatPhoneModal } from "@/hooks/use-create-phone-modal";
+import { useEditPhoneModal } from "@/hooks/use-edit-phone-modal";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
@@ -25,9 +26,10 @@ const schema = z.object({
   price: z.number().int().positive(),
 });
 
-export const CreatePhoneModal = () => {
-  const createPhone = useCreatPhoneModal();
+export const EditPhoneModal = () => {
+  const editPhoneModal = useEditPhoneModal();
   const router = useRouter();
+  const phone = editPhoneModal.data!;
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
@@ -37,28 +39,35 @@ export const CreatePhoneModal = () => {
     },
   });
 
+  useEffect(() => {
+    if (phone) {
+      form.setValue("name", phone.name);
+      form.setValue("price", phone.price);
+    }
+  }, [phone, form]);
+
   const loading = form.formState.isSubmitting;
 
   const onSubmit = (values: z.infer<typeof schema>) => {
-    addPhone(values.name, values.price)
-      .then((data) => {
-        router.push(`/phone/${data?.id}`);
+    editPhone(phone.id, values.name, values.price)
+      .then(() => {
+        router.push(`/phone/${phone.id}`);
         router.refresh();
-        toast.success(`${data?.name}を追加しました！`);
+        toast.success(`電話の情報を更新しました！`);
       })
       .catch((error) => {
         console.log(error);
         toast.error(`操作中にエラーが起きました。もう一度試してみてください。`);
       });
-    createPhone.onClose();
+    editPhoneModal.onClose();
   };
 
   return (
     <Modal
-      isOpen={createPhone.isOpen}
-      onClose={createPhone.onClose}
-      title="Create New Phone"
-      description="enter new phone information."
+      isOpen={editPhoneModal.isOpen}
+      onClose={editPhoneModal.onClose}
+      title="Edit New Phone"
+      description="enter the phone information."
     >
       <Form {...form}>
         <form
@@ -91,21 +100,21 @@ export const CreatePhoneModal = () => {
                 <FormDescription>
                   金額を指定してください。0より大きい整数のみ指定できます。
                 </FormDescription>
-                {/* <FormMessage className="text-rose-500" /> */}
+                <FormMessage className="text-rose-500" />
               </FormItem>
             )}
           />
           <div className="flex justify-end gap-2">
             <Button
               variant="outline"
-              onClick={() => createPhone.onClose()}
+              onClick={() => editPhoneModal.onClose()}
               disabled={loading}
               type="button"
             >
               Cancel
             </Button>
             <Button variant="secondary" disabled={loading} type="submit">
-              Create
+              Edit
             </Button>
           </div>
         </form>

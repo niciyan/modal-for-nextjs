@@ -19,14 +19,12 @@ import { useCreatPhoneModal } from "@/hooks/use-create-phone-modal";
 import { Phone } from "@prisma/client";
 import {
   ArrowBigRight,
-  CheckIcon,
   ChevronsUpDown,
   PhoneIcon,
   PlusCircle,
 } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
 
 interface Props {
   phones: Phone[];
@@ -39,6 +37,10 @@ const PhoneSwitcher = ({ phones }: Props) => {
   const params = useParams();
 
   const currentPhone = phones.find((phone) => phone.id === params.phoneId);
+
+  if (!currentPhone) {
+    return null;
+  }
 
   return (
     <>
