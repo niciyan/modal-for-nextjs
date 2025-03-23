@@ -25,26 +25,12 @@ export const PhoneList = ({ page, phones, pageCount }: Props) => {
   };
 
   return (
-    <div className="space-y-4 py-2">
-      {phones.map((phone) => (
-        <div key={phone.id}>
-          <div className="flex justify-start items-center gap-x-3">
-            <h3 className="font-semibold">{phone.name}</h3>
-            <Button onClick={() => onCopy(phone.id)} variant="ghost" size="sm">
-              <CopyIcon className="h-3 w-3" />
-            </Button>
-          </div>
-          <div className="flex justify-start">
-            <p className="text-sm text-muted-foreground">
-              {phone.createdAt.toDateString()}
-            </p>
-          </div>
-        </div>
-      ))}
+    <div className="flex flex-col gap-y-2 py-2">
       <div className="flex justify-start gap-x-1">
         {hasPrev && (
           <Button
             variant="outline"
+            size="sm"
             onClick={() => {
               router.push(`/phone?page=${page - 1}`);
             }}
@@ -56,6 +42,7 @@ export const PhoneList = ({ page, phones, pageCount }: Props) => {
         {hasNext && (
           <Button
             variant="outline"
+            size="sm"
             onClick={() => {
               router.push(`/phone?page=${page + 1}`);
             }}
@@ -65,6 +52,21 @@ export const PhoneList = ({ page, phones, pageCount }: Props) => {
           </Button>
         )}
       </div>
+      {phones.map((phone) => (
+        <div key={phone.id} className="pl-2">
+          <div className="flex justify-start items-center gap-x-3">
+            <h3 className="font-semibold">{phone.name}</h3>
+            <Button onClick={() => onCopy(phone.id)} variant="ghost" size="sm">
+              <CopyIcon className="h-3 w-3" />
+            </Button>
+          </div>
+          <div className="flex justify-start">
+            <p className="text-sm text-muted-foreground">
+              {phone.createdAt.toLocaleString()}
+            </p>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

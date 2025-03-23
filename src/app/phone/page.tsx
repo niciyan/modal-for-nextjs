@@ -24,13 +24,7 @@ export default async function PhonePage({ searchParams }: Props) {
 
   const { count, pageCount, phones } = await getPhonesPagination(pageNum);
   return (
-    <div className="p-10">
-      <div className="space-y-2 mb-2">
-        <h1 className="text-2xl">
-          Phones <span className="text-muted-foreground">({count})</span>
-        </h1>
-      </div>
-      <Separator />
+    <div className="px-6 py-4">
       <PhoneList
         page={pageNum}
         phones={phones}
