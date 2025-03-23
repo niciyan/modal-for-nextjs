@@ -54,7 +54,7 @@ const PhoneSwitcher = ({ phones }: Props) => {
           <Command>
             <CommandInput placeholder="Search" />
             <CommandList>
-              <CommandGroup heading="Phones">
+              {/* <CommandGroup heading="Phones">
                 {phones?.map((phone) => (
                   <CommandItem
                     key={phone.id}
@@ -76,7 +76,7 @@ const PhoneSwitcher = ({ phones }: Props) => {
                   </CommandItem>
                 ))}
               </CommandGroup>
-              <CommandSeparator />
+              <CommandSeparator /> */}
               <CommandGroup heading="Links">
                 <CommandItem
                   onSelect={() => {
