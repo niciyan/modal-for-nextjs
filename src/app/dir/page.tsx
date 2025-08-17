@@ -28,7 +28,7 @@ export default function Page() {
       />
       <div>
         <Button variant="outline" onClick={() => setOpen(true)}>
-          <Edit className="h-4 w-4 mr-2" /> Update
+          Alert Confirm Test
         </Button>
       </div>
     </>

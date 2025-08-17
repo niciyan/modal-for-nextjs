@@ -24,6 +24,9 @@ import * as z from "zod";
 const schema = z.object({
   name: z.string().min(1).trim(),
   price: z.number().int().positive(),
+  company: z.string().trim().optional(),
+  type: z.string().trim().optional(),
+  comment: z.string().trim().optional(),
 });
 
 export const EditPhoneModal = () => {
@@ -36,6 +39,9 @@ export const EditPhoneModal = () => {
     defaultValues: {
       name: "",
       price: 1,
+      company: "",
+      type: "",
+      comment: "",
     },
   });
 
@@ -43,6 +49,9 @@ export const EditPhoneModal = () => {
     if (phone) {
       form.setValue("name", phone.name);
       form.setValue("price", phone.price);
+      form.setValue("company", phone.company || "");
+      form.setValue("type", phone.type || "");
+      form.setValue("comment", phone.comment || "");
     }
   }, [phone, form]);
 
@@ -51,7 +60,7 @@ export const EditPhoneModal = () => {
   const onSubmit = (values: z.infer<typeof schema>) => {
     editPhone(phone.id, values.name, values.price)
       .then(() => {
-        router.push(`/phone/${phone.id}`);
+        // router.push(`/phone/${phone.id}`);
         router.refresh();
         toast.success(`電話の情報を更新しました！`);
       })
@@ -100,6 +109,49 @@ export const EditPhoneModal = () => {
                 <FormDescription>
                   金額を指定してください。0より大きい整数のみ指定できます。
                 </FormDescription>
+                <FormMessage className="text-rose-500" />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="company"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Company</FormLabel>
+                <FormControl>
+                  <Input disabled={loading} placeholder="Company" {...field} />
+                </FormControl>
+                <FormMessage className="text-rose-500" />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="type"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Type</FormLabel>
+                <FormControl>
+                  <Input disabled={loading} placeholder="" {...field} />
+                </FormControl>
+                <FormMessage className="text-rose-500" />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="comment"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Comment</FormLabel>
+                <FormControl>
+                  <Input
+                    disabled={loading}
+                    placeholder="comment..."
+                    {...field}
+                  />
+                </FormControl>
                 <FormMessage className="text-rose-500" />
               </FormItem>
             )}

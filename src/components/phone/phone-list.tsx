@@ -2,7 +2,13 @@
 import { Button } from "@/components/ui/button";
 import { useEditPhoneModal } from "@/hooks/use-edit-phone-modal";
 import { Phone } from "@prisma/client";
-import { ArrowRight, ChevronLeft, ChevronRight, CopyIcon } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  CopyIcon,
+  Edit3Icon,
+  InfoIcon,
+} from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 
@@ -55,10 +61,21 @@ export const PhoneList = ({ page, phones, pageCount }: Props) => {
         )}
       </div>
       {phones.map((phone) => (
-        <div key={phone.id} className="pl-2">
+        <div
+          key={phone.id}
+          className="w-[480px] p-4 group relative border rounded-md"
+        >
           <div className="flex justify-start items-center gap-x-3">
             <h3 className="font-semibold">{phone.name}</h3>
-            <div className="flex gap-x-1">
+            {/* Buttons */}
+            <div className="hidden absolute top-1 right-1 group-hover:flex gap-x-1 ">
+              <Button
+                onClick={() => editPhoneModal.onOpen(phone)}
+                variant="ghost"
+                size="iconSm"
+              >
+                <Edit3Icon className="h-3 w-3" />
+              </Button>
               <Button
                 onClick={() => onCopy(phone.id)}
                 variant="ghost"
@@ -74,14 +91,15 @@ export const PhoneList = ({ page, phones, pageCount }: Props) => {
                 variant="ghost"
                 size="iconSm"
               >
-                <ArrowRight className="h-3 w-3" />
+                <InfoIcon className="h-3 w-3" />
               </Button>
             </div>
           </div>
-          <div className="flex justify-start">
+          <div className="flex justify-start gap-x-4 mt-2">
             <p className="text-sm text-muted-foreground">
-              {phone.createdAt.toLocaleString()}
+              作成日: {phone.createdAt.toLocaleString()}
             </p>
+            <p className="text-sm text-muted-foreground">値段: {phone.price}</p>
           </div>
         </div>
       ))}

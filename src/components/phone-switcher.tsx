@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/popover";
 
 import { Button } from "@/components/ui/button";
-import { useCreatPhoneModal } from "@/hooks/use-create-phone-modal";
+import { useCreatePhoneModal } from "@/hooks/use-create-phone-modal";
 import { Phone } from "@prisma/client";
 import {
   ArrowBigRight,
@@ -32,7 +32,7 @@ interface Props {
 
 const PhoneSwitcher = ({ phones }: Props) => {
   const router = useRouter();
-  const { onOpen: createStoreOpen } = useCreatPhoneModal();
+  const { onOpen: createStoreOpen } = useCreatePhoneModal();
   const [open, setOpen] = useState(false);
   const params = useParams();
 

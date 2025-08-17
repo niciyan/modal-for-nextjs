@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export default function HeadphonePage() {
   return (
-    <div className="p-10 space-y-8">
+    <div className="space-y-8">
       <div className="flex-col ">
         <div className="flex items-center justify-between py-4">
           <div>

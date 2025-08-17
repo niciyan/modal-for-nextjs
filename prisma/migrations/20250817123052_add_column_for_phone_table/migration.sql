@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE `phone` ADD COLUMN `comment` VARCHAR(191) NULL,
+    ADD COLUMN `company` VARCHAR(191) NULL,
+    ADD COLUMN `type` VARCHAR(191) NULL;
