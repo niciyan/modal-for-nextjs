@@ -58,7 +58,14 @@ export const EditPhoneModal = () => {
   const loading = form.formState.isSubmitting;
 
   const onSubmit = (values: z.infer<typeof schema>) => {
-    editPhone(phone.id, values.name, values.price)
+    editPhone(
+      phone.id,
+      values.name,
+      values.price,
+      values.company,
+      values.type,
+      values.comment
+    )
       .then(() => {
         // router.push(`/phone/${phone.id}`);
         router.refresh();

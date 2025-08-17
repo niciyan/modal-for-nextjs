@@ -16,7 +16,14 @@ export const addPhone = async (name: string, price: number) => {
   }
 };
 
-export const editPhone = async (id: string, name: string, price: number) => {
+export const editPhone = async (
+  id: string,
+  name: string,
+  price: number,
+  company?: string,
+  type?: string,
+  comment?: string
+) => {
   const phone = await db.phone.update({
     where: {
       id: id,
@@ -24,6 +31,9 @@ export const editPhone = async (id: string, name: string, price: number) => {
     data: {
       name,
       price,
+      company,
+      type,
+      comment,
     },
   });
   return phone;
